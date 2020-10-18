@@ -36,4 +36,9 @@ transition의 경우 자동으로 반대 상황에 대한 animation이 적용되
 
 하지만 사라질 때 자연스럽게 애니메이션이 들어가지 않음
 
+class를 분할해서 fade-in을 주었는데
+setTimeout을 사용하지 않을경우 fade-in 효과가 적용되지 않는 문제가 발생함.
+
 2. e.stopPropagation()는 언제 사용해야하는건지 잘 모르겠음
+
+3. 1 발전단계에서 생긴 fade-in 효과가 적용되지 않는 문제의 원인을 모르겠음

@@ -129,10 +129,6 @@ body {
   max-width: 77rem;
 }
 
-.show-modal {
-  display: flex;
-}
-
 .modal-container {
   position: fixed;
   top: 0;
@@ -140,7 +136,6 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: 998;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
@@ -152,7 +147,17 @@ body {
   border-radius: 5px;
   overflow: hidden;
   width: 40rem;
-  animation: modalOpen 0.3s ease-in 0s 1 normal forwards;
+
+  opacity: 0;
+  transition: all 0.1s ease-out;
+}
+
+.show-modal {
+  display: flex;
+}
+
+.fade-in {
+  opacity: 1;
 }
 
 .modal--header {
@@ -255,14 +260,4 @@ body {
 
 .left-menu > ul > li:last-child {
   border-bottom: 2px solid rgba(200, 200, 200, 0.1);
-}
-
-@keyframes modalOpen {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
 }
