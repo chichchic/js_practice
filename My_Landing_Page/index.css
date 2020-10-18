@@ -13,6 +13,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 p {
   font-weight: 400;
 }
@@ -50,6 +54,10 @@ body {
   padding: 0;
   margin: 0;
   transition: transform 0.3s ease;
+}
+
+.content-body-nav {
+  width: calc(100vw - 20rem);
 }
 
 .show-nav {
