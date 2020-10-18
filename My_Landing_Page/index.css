@@ -129,6 +129,10 @@ body {
   max-width: 77rem;
 }
 
+.show-modal {
+  display: flex;
+}
+
 .modal-container {
   position: fixed;
   top: 0;
@@ -148,6 +152,7 @@ body {
   border-radius: 5px;
   overflow: hidden;
   width: 40rem;
+  animation: modalOpen 0.3s ease-in 0s 1 normal forwards;
 }
 
 .modal--header {
@@ -212,10 +217,6 @@ body {
   padding: 8px;
 }
 
-.show-modal {
-  display: flex;
-}
-
 .left-menu {
   position: fixed;
   top: 0;
@@ -256,11 +257,12 @@ body {
   border-bottom: 2px solid rgba(200, 200, 200, 0.1);
 }
 
-@keyframes smoothSliding {
-  0% {
-    transform: translateX(0);
+@keyframes modalOpen {
+  from {
+    opacity: 0;
   }
-  100% {
-    transform: translateX(20rem);
+
+  to {
+    opacity: 1;
   }
 }

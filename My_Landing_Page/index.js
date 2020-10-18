@@ -1,14 +1,3 @@
-const concealElement = function (element) {
-  element.classList.remove("show-modal");
-};
-
-const showElement = function (element) {
-  element.classList.add("show-modal");
-};
-
-const addClickEvent = function (element, fucn, option = false) {
-  element.addEventListener("click", fucn, option);
-};
 window.onload = () => {
   const headerBtn = document.getElementsByClassName("header--button")[0];
   const modalContainer = document.getElementsByClassName("modal-container")[0];
@@ -16,43 +5,25 @@ window.onload = () => {
   const modalBtn = document.getElementsByClassName("modal--button")[0];
 
   const navToggle = document.getElementById("toggle");
-  let toggleState = false;
 
-  // modal control
-  addClickEvent(headerBtn, (e) => {
-    showElement(modalContainer);
+  // modal open
+  headerBtn.addEventListener("click", (e) => {
+    modalContainer.classList.add("show-modal");
   });
 
-  addClickEvent(modalContainer, (e) => {
-    if (e.target == modalContainer) {
-      concealElement(modalContainer);
-    }
-  });
-
-  addClickEvent(closeBtn, (e) => {
-    if (e.target == closeBtn) {
-      concealElement(modalContainer);
-    }
-    e.stopPropagation();
-  });
-
-  addClickEvent(modalBtn, (e) => {
-    /* 유효성 검사 들어가야함*/
+  //modal close
+  window.addEventListener("click", (e) => {
+    e.target == closeBtn || e.target == modalContainer
+      ? modalContainer.classList.remove("show-modal")
+      : false;
     if (e.target == modalBtn) {
-      concealElement(modalContainer);
+      /* 유효성 검사 들어가야함 */
+      modalContainer.classList.remove("show-modal");
     }
-    e.stopPropagation();
   });
 
   // navi control
   navToggle.addEventListener("click", (e) => {
-    const body = document.getElementsByTagName("body")[0];
-    if (!toggleState) {
-      toggleState = !toggleState;
-      body.classList.add("show-nav");
-    } else {
-      toggleState = !toggleState;
-      body.classList.remove("show-nav");
-    }
+    document.body.classList.toggle("show-nav");
   });
 };
