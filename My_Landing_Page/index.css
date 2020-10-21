@@ -253,6 +253,7 @@ body {
 .profile__img {
   height: 7.5rem;
   width: 7.5rem;
+  border-radius: 50%;
 }
 .left-menu > ul {
   margin: 0;
