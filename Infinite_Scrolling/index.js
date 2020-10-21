@@ -1,3 +1,5 @@
+var isNowAppending = false;
+
 const makeRandomSentence = function (wordCnt) {
   const alpha = "abcdefghijklmnopqrstuvwxyz";
   let output = "";
@@ -39,14 +41,34 @@ const makeCard = function () {
   return newCard;
 };
 
+const appendFiveCard = function (element) {
+  const loader = document.querySelector(".loader");
+  loader.style.display = "flex";
+  setTimeout(() => {
+    for (let i = 0; i < 5; i++) {
+      element.appendChild(makeCard());
+    }
+    loader.style.display = "none";
+    isNowAppending = false;
+  }, 1000);
+};
+
+window.addEventListener("scroll", function (e) {
+  if (
+    !isNowAppending &&
+    window.scrollY + window.innerHeight > document.body.scrollHeight
+  ) {
+    isNowAppending = true;
+    const content = document.querySelector(".content");
+    appendFiveCard(content);
+  }
+});
+
 window.onload = () => {
   const content = document.querySelector(".content");
-  content.appendChild(makeCard());
-  content.appendChild(makeCard());
-  content.appendChild(makeCard());
-  content.appendChild(makeCard());
-  content.appendChild(makeCard());
-  //TODO: 스크롤 작업
-  //TODO: 검색
-  //TODO: 로딩 애니메이션 작업
+  appendFiveCard(content);
+
+  //TODO: content 를 한번만찾고 전체 js에서 사용하는 법 찾기
+  //TODO: 검색 기능 추가하기
+  //TODO: README 수정하기
 };
