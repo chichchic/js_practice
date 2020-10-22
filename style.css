@@ -1,0 +1,63 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%; /* 10px/16px = 62.5% -> 1rem = 10px; */
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 4.16rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+body {
+  padding: 4rem;
+  font-family: "Noto Sans KR", sans-serif, "Apple SD Gothic Neo",
+    AppleSDGothicNeo, "Noto Sans CJK KR", "NanumGothic", "Malgun Gothic",
+    "맑은 고딕", 돋움, dotum, arial;
+  font-size: 1.6rem;
+  background-color: #f4f4f4;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+address {
+  font-style: normal;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+table,
+th,
+td {
+  border: 1px solid #333333;
+  border-collapse: collapse;
+}
+
+table {
+  margin: 0 auto;
+}
+
+th,
+td {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+td > a {
+  text-decoration: underline;
+}
