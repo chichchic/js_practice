@@ -9,7 +9,6 @@
       rel="stylesheet"
       type="text/css"
     />
-    <script src="./script.js"></script>
     <link rel="stylesheet" type="text/css" href="./style.css" />
   </head>
   <body>
@@ -19,7 +18,7 @@
         type="text"
         class="header--input"
         placeholder="Filter posts..."
-        onkeyup="searchContents(this.value)"
+        onkeyup="filterCards(this.value)"
       />
     </div>
     <article class="content"></article>
@@ -28,5 +27,6 @@
       <div class="loader--circle"></div>
       <div class="loader--circle"></div>
     </div>
+    <script src="./script.js"></script>
   </body>
 </html>

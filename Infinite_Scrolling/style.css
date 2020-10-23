@@ -85,9 +85,15 @@ input {
 }
 
 .loader {
-  display: none;
+  display: flex;
   justify-content: center;
   height: 10rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.loader.show {
+  opacity: 1;
 }
 
 .loader--circle {
