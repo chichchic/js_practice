@@ -1,75 +1,83 @@
-var isNowAppending = false;
+let isNowAppending = false;
+const content = document.querySelector(".content");
+const loader = document.querySelector(".loader");
+let index = 0;
+const limit = 5;
+let searchInputStr = null;
 
-const makeRandomSentence = function (wordCnt) {
-  const alpha = "abcdefghijklmnopqrstuvwxyz";
-  let output = "";
-  while (wordCnt-- > 0) {
-    wordlen = Math.floor(Math.random() * 8 + 3);
-    while (wordlen-- > 0) {
-      output += alpha[Math.floor(Math.random() * alpha.length)];
+//검색 함수
+const filterCards = function (searchInput) {
+  searchInputStr = searchInput;
+  const contentCards = document.querySelectorAll(".content--card");
+  contentCards.forEach((element, index) => {
+    if (element.innerText.includes(searchInput)) {
+      contentCards[index].style.display = "block";
+    } else {
+      contentCards[index].style.display = "none";
     }
-    output += " ";
+  });
+};
+
+// 가데이터 받아오는 함수
+async function getPosts() {
+  try {
+    const res = await fetch(
+      `https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${index}`
+    );
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    } else return Promise.reject(`${res.status} Error: Can't get datas`);
+  } catch (error) {
+    console.error(e);
   }
-  return output;
-};
-var index = 1;
+}
 
-const makeCardElement = function (tagName, className, text = null) {
-  let newElement = document.createElement(tagName);
-  newElement.className = className;
-  if (text) newElement.innerText = text;
-  return newElement;
-};
-
-const makeCard = function () {
-  let newCard = makeCardElement("section", "content--card");
-  let cardIndex = makeCardElement("div", "content--card__index", index);
-  let cardTitle = makeCardElement(
-    "h2",
-    "content--card__title",
-    makeRandomSentence(3)
-  );
-  let cardBody = makeCardElement(
-    "p",
-    "content--card__body",
-    makeRandomSentence(Math.floor(Math.random() * 15 + 20))
-  );
-  newCard.appendChild(cardIndex);
-  newCard.appendChild(cardTitle);
-  newCard.appendChild(cardBody);
+//카드 생성 함수
+const makeCard = function ({ title, body }) {
+  const newCard = document.createElement("section");
+  newCard.classList.add("content--card");
+  newCard.innerHTML = `
+  <div class="content--card__index">${index + 1}</div>
+  <h2 class="content--card__title">${title}</h2>
+  <p class="content--card__body">${body}</p>
+  `;
   index++;
   return newCard;
 };
 
-const appendFiveCard = function (element) {
-  const loader = document.querySelector(".loader");
-  loader.style.display = "flex";
-  setTimeout(() => {
-    for (let i = 0; i < 5; i++) {
-      element.appendChild(makeCard());
-    }
-    loader.style.display = "none";
-    isNowAppending = false;
-  }, 1000);
+// 카드 5개를 화면에 추가해주는 함수
+const appendFiveCard = async function (element) {
+  loader.classList.add("show");
+  const datas = await getPosts();
+  console.log(datas);
+  loader.classList.remove("show");
+  datas.forEach((dataContent) => {
+    element.appendChild(makeCard(dataContent));
+  });
+  // 더이상 들어올 데이터가 없을 때
+  if (datas.length === 0) isNowAppending = true;
+  else isNowAppending = false;
 };
 
-window.addEventListener("scroll", function (e) {
-  if (
-    !isNowAppending &&
-    window.scrollY + window.innerHeight > document.body.scrollHeight
-  ) {
-    isNowAppending = true;
-    const content = document.querySelector(".content");
-    appendFiveCard(content);
-  }
-});
+/*
+  화면에 loading element가 들어있는지 확인하는 함수
+  만일 loading이 들어와 있을 경우 새로운 card를 만든다.
+*/
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!isNowAppending && !searchInputStr && entry.isIntersecting) {
+        isNowAppending = true;
+        appendFiveCard(content);
+      }
+    });
+  },
+  { threshold: 0.3 }
+);
 
-window.onload = () => {
-  const content = document.querySelector(".content");
-  appendFiveCard(content);
+function init() {
+  observer.observe(loader);
+}
 
-  //TODO: content 를 한번만찾고 전체 js에서 사용하는 법 찾기
-  //TODO: 검색 기능 추가하기
-  //TODO: README 수정하기
-  //TODO: 스크롤 최하단으로 내렸는지 여부가 조금 삐져나오는거 해결하기 + 스크롤 이벤트가 아닌 하단 박스로 체크하는 방식 변경하기
-};
+init();

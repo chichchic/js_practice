@@ -9,13 +9,17 @@
       rel="stylesheet"
       type="text/css"
     />
-    <script src="./script.js"></script>
     <link rel="stylesheet" type="text/css" href="./style.css" />
   </head>
   <body>
     <div class="header">
       <h1 class="header--title">My Blog</h1>
-      <input type="text" class="header--input" placeholder="Filter posts..." />
+      <input
+        type="text"
+        class="header--input"
+        placeholder="Filter posts..."
+        onkeyup="filterCards(this.value)"
+      />
     </div>
     <article class="content"></article>
     <div class="loader">
@@ -23,5 +27,6 @@
       <div class="loader--circle"></div>
       <div class="loader--circle"></div>
     </div>
+    <script src="./script.js"></script>
   </body>
 </html>
