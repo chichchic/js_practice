@@ -1,4 +1,5 @@
 var isNowAppending = false;
+const cardContents = [];
 
 const makeRandomSentence = function (wordCnt) {
   const alpha = "abcdefghijklmnopqrstuvwxyz";
@@ -12,7 +13,7 @@ const makeRandomSentence = function (wordCnt) {
   }
   return output;
 };
-var index = 1;
+var index = 0;
 
 const makeCardElement = function (tagName, className, text = null) {
   let newElement = document.createElement(tagName);
@@ -22,17 +23,22 @@ const makeCardElement = function (tagName, className, text = null) {
 };
 
 const makeCard = function () {
+  const newContent = {
+    title: makeRandomSentence(3),
+    body: makeRandomSentence(Math.floor(Math.random() * 15 + 20)),
+  };
+  cardContents.push(newContent);
   let newCard = makeCardElement("section", "content--card");
-  let cardIndex = makeCardElement("div", "content--card__index", index);
+  let cardIndex = makeCardElement("div", "content--card__index", index + 1);
   let cardTitle = makeCardElement(
     "h2",
     "content--card__title",
-    makeRandomSentence(3)
+    cardContents[index].title
   );
   let cardBody = makeCardElement(
     "p",
     "content--card__body",
-    makeRandomSentence(Math.floor(Math.random() * 15 + 20))
+    cardContents[index].body
   );
   newCard.appendChild(cardIndex);
   newCard.appendChild(cardTitle);
@@ -53,6 +59,20 @@ const appendFiveCard = function (element) {
   }, 1000);
 };
 
+const searchContents = function (searchInput) {
+  const contentCards = document.getElementsByClassName("content--card");
+  cardContents.forEach((element, index) => {
+    if (
+      element.title.includes(searchInput) ||
+      element.body.includes(searchInput)
+    ) {
+      contentCards[index].style.display = "block";
+    } else {
+      contentCards[index].style.display = "none";
+    }
+  });
+};
+
 window.addEventListener("scroll", function (e) {
   if (
     !isNowAppending &&
@@ -69,6 +89,5 @@ window.onload = () => {
   appendFiveCard(content);
 
   //TODO: content 를 한번만찾고 전체 js에서 사용하는 법 찾기
-  //TODO: 검색 기능 추가하기
-  //TODO: README 수정하기
+  //TODO: 스크롤 최하단으로 내렸는지 여부가 조금 삐져나오는거 해결하기 + 스크롤 이벤트가 아닌 하단 박스로 체크하는 방식 변경하기
 };
