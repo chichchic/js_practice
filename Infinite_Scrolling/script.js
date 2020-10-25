@@ -78,7 +78,6 @@ const appendFiveCard = async function (element) {
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      console.log(entry.isIntersecting);
       if (!isNowAppending && !searchInputStr && entry.isIntersecting) {
         isNowAppending = true;
 
