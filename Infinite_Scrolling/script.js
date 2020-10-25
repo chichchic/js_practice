@@ -50,14 +50,25 @@ const makeCard = function ({ title, body }) {
 const appendFiveCard = async function (element) {
   loader.classList.add("show");
   const datas = await getPosts();
-  console.log(datas);
-  loader.classList.remove("show");
-  datas.forEach((dataContent) => {
-    element.appendChild(makeCard(dataContent));
-  });
-  // 더이상 들어올 데이터가 없을 때
-  if (datas.length === 0) isNowAppending = true;
-  else isNowAppending = false;
+
+  //애니메이션 효과 보여주기 위해 의도적으로 기다리는 시간 추가
+  setTimeout(() => {
+    loader.classList.remove("show");
+
+    //사라지는 트렌지션 기다리는 시간
+    setTimeout(() => {
+      datas.forEach((dataContent) => {
+        element.appendChild(makeCard(dataContent));
+      });
+      // 더이상 들어올 데이터가 없을 때
+      if (datas.length === 0) {
+        console.log("NO DATA");
+        isNowAppending = true;
+      } else {
+        isNowAppending = false;
+      }
+    }, 300);
+  }, 1000);
 };
 
 /*
