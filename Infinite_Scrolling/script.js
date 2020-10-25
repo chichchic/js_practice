@@ -3,7 +3,7 @@ const content = document.querySelector(".content");
 const loader = document.querySelector(".loader");
 let index = 0;
 const limit = 5;
-let searchInputStr = null;
+let searchInputStr = "";
 
 //검색 함수
 const filterCards = function (searchInput) {
@@ -67,13 +67,17 @@ const appendFiveCard = async function (element) {
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
+      console.log(entry.isIntersecting);
       if (!isNowAppending && !searchInputStr && entry.isIntersecting) {
         isNowAppending = true;
+
         appendFiveCard(content);
       }
     });
   },
-  { threshold: 0.3 }
+  {
+    threshold: [1],
+  }
 );
 
 function init() {

@@ -72,3 +72,7 @@ async function getPosts() {
 }
 ```
 [MDN](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
+
+11. IntersectionObserver를 사용할 때 threshold값을 통해 작동되는 시점을 설정 할 수 있다.
+
+[참고 블로그](https://heropy.blog/2019/10/27/intersection-observer/)
