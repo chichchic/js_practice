@@ -55,6 +55,7 @@ input {
   max-width: 80rem;
   width: 60%;
   margin: 0 auto;
+  min-height: calc(100vh - 113px); /* 조금 더 유동적이면 좋을 것 같음*/
 }
 
 .content--card {
@@ -82,6 +83,10 @@ input {
 
 .content--card__body {
   margin-top: 1.5rem;
+}
+
+.end-data {
+  text-align: center;
 }
 
 .loader {

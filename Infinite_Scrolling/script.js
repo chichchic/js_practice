@@ -4,6 +4,7 @@ const loader = document.querySelector(".loader");
 let index = 0;
 const limit = 5;
 let searchInputStr = "";
+let isLoaderIntersecting = false;
 
 //검색 함수
 const filterCards = function (searchInput) {
@@ -46,6 +47,13 @@ const makeCard = function ({ title, body }) {
   return newCard;
 };
 
+const appendEndData = function (element) {
+  const noDataEl = document.createElement("div");
+  noDataEl.classList.add("end-data");
+  noDataEl.innerText = "End DATA";
+  element.appendChild(noDataEl);
+};
+
 // 카드 5개를 화면에 추가해주는 함수
 const appendFiveCard = async function (element) {
   loader.classList.add("show");
@@ -60,11 +68,16 @@ const appendFiveCard = async function (element) {
       datas.forEach((dataContent) => {
         element.appendChild(makeCard(dataContent));
       });
+
       // 더이상 들어올 데이터가 없을 때
       if (datas.length === 0) {
-        console.log("NO DATA");
+        appendEndData(content);
+        observer.disconnect();
         isNowAppending = true;
       } else {
+        if (isLoaderIntersecting) {
+          window.scrollBy(0, -loader.clientHeight);
+        }
         isNowAppending = false;
       }
     }, 300);
@@ -78,21 +91,34 @@ const appendFiveCard = async function (element) {
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      console.log(entry.isIntersecting);
-      if (!isNowAppending && !searchInputStr && entry.isIntersecting) {
-        isNowAppending = true;
+      if (entry.intersectionRatio < 0.9) isLoaderIntersecting = false;
+      else isLoaderIntersecting = true;
 
+      if (
+        !isNowAppending &&
+        !searchInputStr &&
+        entry.intersectionRatio >= 0.9
+      ) {
+        isNowAppending = true;
         appendFiveCard(content);
       }
     });
   },
   {
-    threshold: [1],
+    threshold: [0, 0.9],
   }
 );
 
-function init() {
-  observer.observe(loader);
-}
+//setTimeout이 없으면 scroll 이동이 되지않음
+const init = function () {
+  setTimeout(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "auto",
+    });
+    appendFiveCard(content);
+    observer.observe(loader);
+  }, 300);
+};
 
 init();
