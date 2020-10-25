@@ -60,7 +60,11 @@ const appendFiveCard = async function (element) {
   else isNowAppending = false;
 };
 
-let observer = new IntersectionObserver(
+/*
+  화면에 loading element가 들어있는지 확인하는 함수
+  만일 loading이 들어와 있을 경우 새로운 card를 만든다.
+*/
+const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (!isNowAppending && !searchInputStr && entry.isIntersecting) {
@@ -72,4 +76,8 @@ let observer = new IntersectionObserver(
   { threshold: 0.3 }
 );
 
-observer.observe(loader);
+function init() {
+  observer.observe(loader);
+}
+
+init();
