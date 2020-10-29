@@ -1,11 +1,16 @@
-window.onload = () => {
-  const headerBtn = document.getElementsByClassName("header--button")[0];
-  const modalContainer = document.getElementsByClassName("modal-container")[0];
-  const modal = document.getElementsByClassName("modal")[0];
-  const contentBody = document.getElementsByClassName("content-body")[0];
+//TODO: 코드 패턴 바꾸기
+// 참고 링크 https://github.com/EmilyLee1206/login_validator/blob/gh-pages/script.js
 
-  const closeBtn = document.getElementsByClassName("close-btn")[0];
-  const modalBtn = document.getElementsByClassName("modal--button")[0];
+//HACK: 애니메이션 setTimeout 제거하는 방법 찾기
+
+window.onload = () => {
+  const headerBtn = document.querySelector(".header--button");
+  const modalContainer = document.querySelector(".modal-container");
+  const modal = document.querySelector(".modal");
+  const contentBody = document.querySelector(".content-body");
+
+  const closeBtn = document.querySelector(".close-btn");
+  const modalBtn = document.querySelector(".modal--button");
 
   const navToggle = document.getElementById("toggle");
   let navStatus = false;
@@ -41,11 +46,14 @@ window.onload = () => {
   // navi control
   navToggle.addEventListener("click", (e) => {
     document.body.classList.toggle("show-nav");
-    if (navStatus) contentBody.classList.toggle("content-body-nav");
-    else
+    if (navStatus) {
+      contentBody.classList.toggle("content-body-nav");
+      return;
+    } else {
       setTimeout(() => {
         contentBody.classList.toggle("content-body-nav");
       }, 300);
+    }
     navStatus = !navStatus;
   });
 };
