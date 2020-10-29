@@ -10,14 +10,40 @@
 
 meta 태그를 이용해 문서에 대한 간단한 설명을 지정할 수 있다.
 
+
+
+**viewport 설정**
+
+PC화면과 모바일 화면의 픽셀 표현 방법이 다르기 때문에 모바일 기기에서는 화면이 다르게 보일 수 있다.
+
+뷰표트를 활용하여 접속한 기기 화면에 맞추어 확대하거나 축소해 표시할 수 있습니다.
+
+|     속성      |      사용 가능값      |     기본 값      |
+| :-----------: | :-------------------: | :--------------: |
+|     width     | device-width \| 크기  | 브라우저 기본 값 |
+|    height     | device-height \| 크기 | 브라우저 기본 값 |
+| user-scalable |       yes or no       |       yes        |
+| initial-scale |        1 ~ 10         |        1         |
+| minimum-scale |        0 ~ 10         |       0.25       |
+| maximum-scale |        0 ~ 10         |       1.6        |
+
+
+
  사용 예:
 
 ``` html
 <meta charset="utf-8">
 <meta name = "description" content="짧은 설명">
+<meta name="viewport" content="<속성1>, <속석2>, ..."
 ```
 
 참고 링크 : [구글 검색 엔진에서 이해할 수 있는 meta 태그](https://support.google.com/webmasters/answer/79812?jl=ko)
+
+
+
+
+
+
 
 
 
@@ -492,11 +518,17 @@ div는 주로 콘텐츠를 묶어  css를 적용할 때  사용한다.
 
 
 
+**반응형** 
+
+media 속성을 활용하여 화면에 표시할 이미지를 다르게 지정할 수 있다.
+
+
+
 사용예:
 
 ```html
 <video controls>
-	<source src="Painting.mp4" type="video/mp4">
+	<source src="Painting.mp4" type="video/mp4" media="(min-width: 1024px)">
  	<source src="Painting.webm" type="video/webm">
  	<source src="Painting.ogv" type="video/ogv">
   위 파일들이 모두 실행되지 않을 때 보여지는 텍스트
@@ -524,6 +556,8 @@ div는 주로 콘텐츠를 묶어  css를 적용할 때  사용한다.
 
 
 # CSS3
+
+
 
 ## 스타일 우선순위
 
@@ -587,12 +621,6 @@ body {
 
 
 
-
-
-
-
-
-
 ## 속성 정리
 
 
@@ -634,13 +662,167 @@ body {
 
 
 
+### transform-origin
+
+transform  속성은 x축, y축, z축을 default 기준으로 사용한다. 이러한 기준점을 바꾸기 위해 사용하는 속성이다.
+
+
+
+### transform-style: *flat | preserve-3d
+
+부모 요소에 적용한 3D 변형을 하위 요소에도 적용할 수 있다.
+
+
+
+###perspective / perspective-origin 속성
+
+밀어 당기거나 잡아당겨 원근감을 가지도록 만드는 속성이다.
+
+
+
+### backface-visibility
+
+회전한 각도가 90도를 넘을 때 뒷면을 표시할지 결정
+
+
+
+## 트렌지션
+
+
+
+### transition-property: all* | none | <속성 이름>
+
+트랜지션을 적용할 속성 지정하기위해 사용된다. 여러 속성을 사용할 때는 속성 이름값 뒤에 ,(쉼표)로 구분해 사용한다.
+
+
+
+### transiton-duration: <시간>
+
+진행시간을 설정해주는 값이다. 기본 설정 시간은 0으로 되어있어 무조건 설정해주어야하는 값이다.
+
+여러 속성에 다른 시간을 적용 할때는 ,(쉼표)로 구분해 나열한다. 개수가 일치하지 않을 경우 순서대로 반복 적용된다.
+
+
+
+### transition-timing-function
+
+: linear | ease* | ease-in | ease-out | ease-in-out | cubic-bezier(n,n,n,n) -> 직접 정의
+
+
+
+### transition-delay: <시간>
+
+트랜지션이 언제부터 시작할 것인지 설정한다.
+
+
+
+transition: property | duration | timing-function | delay 순서로 속성값을 나열하면 한줄에 표현할 수 있다.
+
+
+
+## 애니메이션
+
+[참고 블로그](https://brunch.co.kr/@99-life/3)
+
+@keyframes를 통해 애니메이션이 바뀌는 지점을 설정할 수 있다.
+
+
+
+### animation-name: 키프레임 이름
+
+사용할 키프레임 이름을 설정한다.
+
+
+
+### animation-duration: <시간>
+
+애니메이션 실행시간을 설정한다.
+
+
+
+### animation-direction: normal* | alternate | **reverse** | **alternate-reverse**
+
+normal: 정방향
+
+reverse: 역방향
+
+alternate: 매 사이클마다 각 주기의 방향을 뒤집으며, 첫 시작은 정방향이다.
+
+alternate-reverse: 매 사이클마다 각 주기의 방향을 뒤집으며, 첫 시작은 역방향이다.
+
+
+
+### animation-iteration-count: <숫자> | infinite
+
+애니메이션이 실행되는 반복 횟수이다. **기본값은 1**
+
+
+
+###animation-timing-function
+
+: linear | ease* | ease-in | ease-out | ease-in-out | cubic-bezier(n,n,n,n) -> 직접 정의
+
+
+
+### animation-play-state: paused | running*
+
+애니메이션이 실행될지 결정한다.
+
+
+
+### animation-fill-mode: none | forwards | backwards | both
+
+애니메이션 스타일과 기본 스타일의 설정에 대한 설정을 해주는 속성입니다.
+
+none : 아무것도 지정되지 않을 상태입니다.
+
+forwards : 애니메이션이 키프레임의 100%에 도달했을 때 마지막 키프레임을 유지합니다.
+
+backwards : 애니메이션의 스타일을 애니메이션이 실제로 시작되기 전에 미리 적용합니다.
+
+both : fowards / backwards 를 모두 적용합니다.
+
+
+
+
+
+## 미디어 쿼리
+
+기본적인 구문 형태: @media [ only | not ] 미디어 유형 [ and 조건 ] * [ and 조건 ]
+
+미디어 유형:
+
+| 미디어 유형 |                  사용 가능한 미디어                  |
+| :---------: | :--------------------------------------------------: |
+|     all     |                   모든 미디어 유형                   |
+|    print    |                      인쇄 장치                       |
+|   screen    |                    컴퓨터 스크린                     |
+|     tv      |            음성과 영상이 동시 출력되는 tv            |
+|    aural    |         음성 합성 장치(화면을 읽어주는 장치)         |
+|   braille   |                    점자 표시 장치                    |
+|  handheld   |            패드처럼 손에 들고 다니는 장치            |
+| projection  |                       프로젝터                       |
+|     tty     | 디스플레이 기능이 제한된 장치(픽셀을 사용할 수 없음) |
+|  embossed   |                     점자 프린터                      |
+
+
+
+### 미디어 쿼리 조건
+
+- 가로 너비 세로 높이
+- 화면 회전 (orientation: landscape - 가로 | potrait - 세로)
+- 화면 비율 (aspect-ratio: width / height)
+- 색상 당 비트 수(color)
+
+
+
+
+
 ## 마진 상쇄 규칙 ([공식문서](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing), [참고 블로그](https://velog.io/@raram2/CSS-%EB%A7%88%EC%A7%84-%EC%83%81%EC%87%84Margin-collapsing-%EC%9B%90%EB%A6%AC-%EC%99%84%EB%B2%BD-%EC%9D%B4%ED%95%B4))
 
 1. 인접 형제 박스 간 상하 마진이 겹칠 때
 2. 빈 요소의 상하 마진이 겹칠 때
 3. 부모 박스와 첫 번째(마지막) 자식 박스의 상단(하단) 마진이 겹칠 때
-
-
 
 
 
@@ -686,11 +868,50 @@ a[title *="us"] {
 
 
 
+## 가상 클래스 & 가상 요소
+
+기본적인 선자들로도 지정하기 어려운 대상들을 선택하기 위해 사용하는 요소
+
+:를 붙여 사용하는 **가상클래스**와 ::를 이름앞에 붙이는 **가상 요소**가 있다.
 
 
-## 가상 클래스
+
+### root 가상 클래스
+
+문서 전체에 적용할 스타일이 있을 경우 사용한다.
 
 
+
+**n에 점화식을 넣을 수 있음.** 예) 2n => 짝수
+**first / last를 통해 첫 번째와 마지막에 접근 가능**
+
+### nth-child(n)과 :nth-last-child(n) 가상 클래스
+
+문서 구조로 표현했을때 같은 레벨이며 같은 부모를 가지는 요소에 스타일을 적용하기 위해 사용된다.
+
+
+
+### nth-of-type(n)과 nth-last-of-type(n) 가상 클래스
+
+id나 class가 없이 몇번째 태그인지 선택하고 싶을 때 사용한다.
+
+
+
+### only-child와 only-of-type 가상 클래스
+
+자식요소가 하나 뿐일 때 / 해당 태그가 하나뿐일 때 선택된다.
+
+
+
+### targer 가상 클래스
+
+앵커의 목적지가 되는 부분의 스타일을 지정할 수 있다.
+
+
+
+### first-line과 first-letter 가상 요소
+
+첫 번째 줄이나 첫 글자에 스타일을 적용할 수있도록 도와준다.
 
 
 
@@ -700,11 +921,15 @@ svg는 XHTML 스펙을 따르고 있기 때문에 xmlns 를 통해 NameSpace를 
 
 Modernizr.svg를 통해 js에서 svg를 지원해주는지 확인할 수 있음
 
+
+
 ## 접근성
 
 접근성을 높이기 위해 role, aria-label 속성과 title, desc 태그를 사용하는것이 좋다.
 
 [참고 링크](https://stackoverflow.com/questions/4697100/accessibility-recommended-alt-text-convention-for-svg-and-mathml)
+
+
 
 # 호스팅
 

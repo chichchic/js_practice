@@ -1,9 +1,7 @@
 //TODO: 코드 패턴 바꾸기
 // 참고 링크 https://github.com/EmilyLee1206/login_validator/blob/gh-pages/script.js
 
-//TODO: 애니메이션 setTimeout 제거하는 방법 찾기
-
-//TODO: 마지막에 if {} else {} 영역 가독성 향상시키기
+//HACK: 애니메이션 setTimeout 제거하는 방법 찾기
 
 window.onload = () => {
   const headerBtn = document.querySelector(".header--button");
@@ -50,6 +48,7 @@ window.onload = () => {
     document.body.classList.toggle("show-nav");
     if (navStatus) {
       contentBody.classList.toggle("content-body-nav");
+      return;
     } else {
       setTimeout(() => {
         contentBody.classList.toggle("content-body-nav");
