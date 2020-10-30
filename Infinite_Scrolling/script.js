@@ -109,16 +109,15 @@ const observer = new IntersectionObserver(
   }
 );
 
-//setTimeout이 없으면 scroll 이동이 되지않음
-const init = function () {
-  setTimeout(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "auto",
-    });
-    appendFiveCard(content);
-    observer.observe(loader);
-  }, 300);
-};
+window.addEventListener("beforeunload", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "auto",
+  });
+});
 
+const init = function () {
+  appendFiveCard(content);
+  observer.observe(loader);
+};
 init();
