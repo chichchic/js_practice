@@ -90,7 +90,10 @@ async function getPosts() {
 
 setTimeout을 활용해 문제를 해결했으나 이유는 찾지 못했다.
 
+=> 문제의 원인은 브라우저는 reload시 이전 페이지의 스크롤 위치로 돌아가려는 경향이 있기때문이다.
+이를 해결하기 위해서는 beforeunload 이벤트를 추가해주거나, setTimeout을 통해 조금의 시간격차를 주어야한다.(smooth를 사용해도 같은 효과를 얻을 수 있음)
 
+[참고 글](https://stackoverflow.com/questions/19057731/scrolltop-on-page-reload-doesnt-work-possible-script-conflict)
 
 ## 기존 프로젝트가 가지고 있는 문제점
 
