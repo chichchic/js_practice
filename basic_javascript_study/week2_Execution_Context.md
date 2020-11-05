@@ -8,6 +8,23 @@
 
 
 
+- 동일한 환경에 있는 코드들을 실행할 때 필요한 환경 정보들을 모아 컨텍스트 구성
+- 컨텍스트들을 순서대로 Call Stack에 쌓아 올림
+- 최상위 컨텍스트와 관련 있는 코드들을 실행
+- 전체 코드의 환경과 순서를 보장
+
+
+
+실행 컨텍스트의 구성 방법
+
+전역공간 -> 자동 실행
+
+함수 -> 실행 컨텍스트 구성 방법
+
+블록 -> {} 로 둘러쌓인 코드 내부(ES6 부터 지원)
+
+
+
 코드를 실행하기 위해 필요한 정보
 
 1. 변수: 전역 변수, 지역 변수, 매개변수, 객체의 프로퍼티
@@ -98,6 +115,14 @@
 2. 함수 컨텍스트의 경우
    활성 객체(Activation Object)를 가츸키며 매개변수와 인수들의 정보를 배열의 형태로 담로 있는 arguments object가 추가된다.
 
+
+
+담기는 내용은 LexicalEnvironment와 같지만 최초 실행시의 스냅샷을 유지한다.
+
+실행 컨텍스트 생성 시 VariableEnvironment에 먼저 정보를 담고, 그대로 LexicalEnvironment에 복사한 후 주로 LexicalEnvironment를 활용한다.
+
+내부구성요소: 현재 컨텍스트 내의 식별자들에 대한 정보(environmentRecord) + 외부 환경 정보가 선언 시점의 스냅샷으로 저장(outerEnvironmentReference)
+
 ## LexicalEnvironment
 
 identifier-variable mapping되는 곳이다.
@@ -118,11 +143,17 @@ Lexical Environment는 3가지 일을 한다.
 
 
 
-Lexical Environment와 Variable Environment의 차이점은 전자가 함수 선언과 변수의 바인딩을 저장하고 후자는 변수 var만 저장한다.
+Lexical Environment와 Variable Environment은 동일하지만 Lexical의 경우 변경사항이 실시간으로 반영된다.
 
 ### environmentRecord와 호이스팅
 
 **environmentRecord**란 lexical environment 안에 함수와 변수를 기록한다.
+
+- 매개변수 식별자(함수의 경우)
+- 선언한 함수
+- var로 선언된 변수의 식별자
+
+전체를 쭉 훑어나가며 순서대로 수집한다.
 
 
 
@@ -161,6 +192,19 @@ function add(a,b){} // 함수 선언식 => 함수 호이스팅 발생
 [this와 arrow function](https://kim-solshar.tistory.com/57)
 
 
+
+## 스터디
+
+```js
+var c = function d() { 
+  d() // 재귀는 실행 가능
+} // (기명) 함수 표현식. 변수명은 c, 함수명은 d
+c(); // 실행 가능
+d(); // 실행 불가능. 에러!
+
+var b = function () { /* ... */ } // (익명) 함수 표현식. 변수명 b가 곧 함수명
+b(); // 실행 가능
+```
 
 
 
