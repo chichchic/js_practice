@@ -39,20 +39,23 @@ export class BounceString {
   }
 
   animate(ctx, moveX, moveY) {
-    ctx.beginPath();
-    ctx.fillStyle = "#00ff00";
-    ctx.arc(moveX, moveY, 6, 0, Math.PI * 2);
-    ctx.fill();
+    //마우스 점 표시
+    // ctx.beginPath();
+    // ctx.fillStyle = "#00ff00";
+    // ctx.arc(moveX, moveY, 6, 0, Math.PI * 2);
+    // ctx.fill();
 
-    ctx.beginPath();
-    ctx.fillStyle = "#0000ff";
-    ctx.arc(this.points[0].x, this.points[0].y, 6, 0, Math.PI * 2);
-    ctx.fill();
+    // 최상단 y점 표시
+    // ctx.beginPath();
+    // ctx.fillStyle = "#0000ff";
+    // ctx.arc(this.points[0].x, this.points[0].y, 6, 0, Math.PI * 2);
+    // ctx.fill();
 
-    ctx.beginPath();
-    ctx.fillStyle = "#ff0000";
-    ctx.arc(this.points[2].x, this.points[2].y, 6, 0, Math.PI * 2);
-    ctx.fill();
+    // 최하단 y점 표시
+    // ctx.beginPath();
+    // ctx.fillStyle = "#ff0000";
+    // ctx.arc(this.points[2].x, this.points[2].y, 6, 0, Math.PI * 2);
+    // ctx.fill();
 
     this.rgb += (this.saveRgb - this.rgb) * 0.12;
 
@@ -108,6 +111,7 @@ export class BounceString {
     }
     ctx.lineTo(this.points[2].x, this.points[2].y);
 
+    // 무조건 선의 가운데만 튕기도록 하기
     // ctx.quadraticCurveTo(
     //   this.points[1].x,
     //   this.points[1].y,
