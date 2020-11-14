@@ -10,38 +10,21 @@
 
     <!-- 2. 버텍스 셰이더를 작성합니다. -->
     <script id="2d-vertex-shader" type="notjs">
-      //픽셀 단위 x, y좌표 애트리뷰트
-      attribute vec2 a_position;
-
-      //x축, y축 해상도 유니폼
-      uniform vec2 u_resolution;
-
+      attribute vec4 a_position;
+      uniform mat4 u_matrix; //4x4 변환 행렬 유니폼
+      varying vec4 v_color;
       void main() {
-        // 픽셀을 0.0 ~ 1.0으로 위치 변환
-        vec2 zeroToOne = a_position / u_resolution;
-
-        // 0->1에서 0->2로 변환
-        vec2 zeroToTwo = zeroToOne * 2.0;
-
-        // 0->2에서 -1->+1로 변환(클립공간 좌표)
-        vec2 clipSpace = zeroToTwo - 1.0;
-
-        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+        gl_Position = u_matrix * a_position;
+        v_color = gl_Position * 0.5 + 0.5;
       }
     </script>
 
     <!-- 3. 프래그먼트 셰이더를 작성합니다. -->
     <script id="2d-fragment-shader" type="notjs">
-      // 프래그먼트 셰이더는 기본 정밀도가 필요합니다.
-      // 그래서 기본적으로 하나를 선택해서 설정하는데,
-      // 여기서는 mediump을 선택했습니다.
-      // mediump는 중간 정밀도를 의미합니다.
       precision mediump float;
-      uniform vec4 u_color;
+      varying vec4 v_color;
       void main() {
-        // gl_FragColor는 프래그먼트 셰이더에서
-        // 설정을 담당하는 특수한 변수입니다.
-        gl_FragColor = u_color; // 붉은 보라색을 반환합니다.
+        gl_FragColor = v_color; // 붉은 보라색을 반환합니다.
       }
     </script>
 
