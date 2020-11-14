@@ -11,11 +11,12 @@
     <!-- 2. 버텍스 셰이더를 작성합니다. -->
     <script id="2d-vertex-shader" type="notjs">
       attribute vec4 a_position;
-      uniform mat4 u_matrix; //4x4 변환 행렬 유니폼
+      attribute vec4 a_color;
+      uniform mat4 u_matrix;
       varying vec4 v_color;
       void main() {
         gl_Position = u_matrix * a_position;
-        v_color = gl_Position * 0.5 + 0.5;
+        v_color = a_color;
       }
     </script>
 
@@ -24,7 +25,7 @@
       precision mediump float;
       varying vec4 v_color;
       void main() {
-        gl_FragColor = v_color; // 붉은 보라색을 반환합니다.
+        gl_FragColor = v_color;
       }
     </script>
 
