@@ -55,36 +55,30 @@ gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
 var colorBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-var r1 = Math.random() * 256; // 0 ~ 255.99999
-var b1 = Math.random() * 256; // 이 값들은
-var g1 = Math.random() * 256; // Uint8Array로
-var r2 = Math.random() * 256; // 저장될 때
-var b2 = Math.random() * 256; // 소수값은 버려질 겁니다.
-var g2 = Math.random() * 256;
 var colors = [
-  r1,
-  b1,
-  g1,
+  Math.random() * 256,
+  Math.random() * 256,
+  Math.random() * 256,
   255,
-  r1,
-  b1,
-  g1,
+  Math.random() * 256,
+  Math.random() * 256,
+  Math.random() * 256,
   255,
-  r1,
-  b1,
-  g1,
+  Math.random() * 256,
+  Math.random() * 256,
+  Math.random() * 256,
   255,
-  r2,
-  b2,
-  g2,
+  Math.random() * 256,
+  Math.random() * 256,
+  Math.random() * 256,
   255,
-  r2,
-  b2,
-  g2,
+  Math.random() * 256,
+  Math.random() * 256,
+  Math.random() * 256,
   255,
-  r2,
-  b2,
-  g2,
+  Math.random() * 256,
+  Math.random() * 256,
+  Math.random() * 256,
   255,
 ];
 gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(colors), gl.STATIC_DRAW);
