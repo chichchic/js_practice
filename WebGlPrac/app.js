@@ -1,3 +1,5 @@
+// 기본 작업
+
 var canvas = document.getElementById("c");
 var gl = canvas.getContext("webgl");
 if (!gl) {
@@ -35,6 +37,8 @@ function createProgram(gl, vertexShader, fragmentShader) {
 
 var program = createProgram(gl, vertexShader, fragmentShader);
 
+// 좌표 찍기
+
 var positionBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 var positions = [
@@ -53,16 +57,19 @@ var positions = [
 ];
 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
+//색상 입히기
+
 var colorBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+var color1 = Math.random() * 256;
 var colors = [
-  Math.random() * 256,
-  Math.random() * 256,
-  Math.random() * 256,
+  color1,
+  color1,
+  color1,
   255,
-  Math.random() * 256,
-  Math.random() * 256,
-  Math.random() * 256,
+  color1,
+  color1,
+  color1,
   255,
   Math.random() * 256,
   Math.random() * 256,
@@ -83,6 +90,7 @@ var colors = [
 ];
 gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(colors), gl.STATIC_DRAW);
 
+//초기 설정된 변수값 가져오기
 var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
 var colorAttributeLocation = gl.getAttribLocation(program, "a_color");
 var matrixUniformLocation = gl.getUniformLocation(program, "u_matrix");
