@@ -6,16 +6,22 @@ class App {
     document.body.appendChild(this.canvas);
     this.ctx = this.canvas.getContext("2d");
 
-    this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
+    this.pixelRatio = window.devicePixelRatio;
 
     window.addEventListener("resize", this.resize.bind(this), false);
     this.resize();
 
-    this.visual = new Visual(this.canvas, [
-      [3, 5, 7],
-      [9, 0, 8],
-      [19, 10, 6],
-    ]);
+    this.visual = new Visual(
+      this.canvas,
+      [
+        [3, 5, 3],
+        [9, 0, 8],
+        [19, 10, 23],
+      ],
+      ["#ff0000", "#00ff00", "#0000ff"],
+      this.stageWidth,
+      this.stageHeight
+    );
 
     requestAnimationFrame(this.animate.bind(this));
   }
@@ -29,6 +35,9 @@ class App {
 
     this.canvas.style.width = this.stageWidth + "px";
     this.canvas.style.height = this.stageHeight + "px";
+
+    this.ctx.scale(this.pixelRatio, this.pixelRatio);
+
     this.ctx.lineCap = "round";
     this.ctx.lineWidth = 4;
   }

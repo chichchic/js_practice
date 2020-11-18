@@ -1,15 +1,15 @@
 export class Line {
-  constructor(canvas, dataSet) {
+  constructor(canvas, dataSet, color = "#000000", stageWidth, stageHeight) {
+    this.color = color;
     this.points = [];
-    const gap = (canvas.width - 100) / dataSet.length;
+    const gap = stageWidth / (dataSet.length - 1);
     this.maxY = 0;
 
     dataSet.forEach((element, index) => {
       this.maxY = this.maxY < element ? element : this.maxY;
-      console.log(canvas.height);
       this.points.push({
-        x: (index + 1) * gap,
-        y: canvas.height - element * 100,
+        x: index * gap,
+        y: stageHeight - element * 20,
       });
     });
     this.maxY - 10;
@@ -17,15 +17,15 @@ export class Line {
 
   animate(ctx) {
     ctx.beginPath();
-    ctx.strokeStyle = "#ff0000";
+    ctx.strokeStyle = this.color;
     ctx.moveTo(this.points[0].x, this.points[0].y);
     for (let i = 0; i < this.points.length; i++) {
       ctx.lineTo(this.points[i].x, this.points[i].y);
     }
     ctx.stroke();
-    // ctx.beginPath();
-    // ctx.fillStyle = "#ffffff";
+    // ctx.fillStyle = this.color;
     // this.points.forEach((element) => {
+    //   ctx.beginPath();
     //   ctx.arc(element.x, element.y, 6, 0, Math.PI * 2);
     //   ctx.fill();
     // });

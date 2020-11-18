@@ -1,10 +1,12 @@
 import { Line } from "./line.js";
 
 export class Visual {
-  constructor(canvas, dataSet) {
+  constructor(canvas, dataSet, colors, stageWidth, stageHeight) {
     this.lines = [];
-    dataSet.forEach((element) => {
-      this.lines.push(new Line(canvas, element));
+    dataSet.forEach((element, index) => {
+      this.lines.push(
+        new Line(canvas, element, colors[index], stageWidth, stageHeight)
+      );
     });
   }
 
