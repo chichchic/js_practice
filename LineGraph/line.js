@@ -16,6 +16,8 @@ export class Line {
   }
 
   animate(ctx) {
+    ctx.lineWidth = 4;
+    ctx.lineCap = "round";
     ctx.beginPath();
     ctx.strokeStyle = this.color;
     ctx.moveTo(this.points[0].x, this.points[0].y);

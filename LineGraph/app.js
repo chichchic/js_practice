@@ -37,9 +37,6 @@ class App {
     this.canvas.style.height = this.stageHeight + "px";
 
     this.ctx.scale(this.pixelRatio, this.pixelRatio);
-
-    this.ctx.lineCap = "round";
-    this.ctx.lineWidth = 4;
   }
 
   animate() {
