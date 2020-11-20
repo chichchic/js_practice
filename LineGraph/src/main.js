@@ -17,6 +17,7 @@ export default class Chart {
     if (options.hasOwnProperty("title")) {
       this.title = document.createElement("h2");
       this.title.innerText = options.title;
+      this.title.style.textAlign = "center";
       section.appendChild(this.title);
     }
 

@@ -1,6 +1,6 @@
 export default {
   padding: {
-    top: 130, //default
+    top: 10, //default
     right: 0, //default
     bottom: 80, //default
     left: 80, //default
