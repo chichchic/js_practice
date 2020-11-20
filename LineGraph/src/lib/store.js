@@ -1,4 +1,4 @@
-import Pubsub from "../lib/pubsub.js";
+import Pubsub from "./pubsub.js";
 
 export default class Store {
   constructor(params) {
@@ -30,9 +30,8 @@ export default class Store {
         //mutation을 사용하지 않고 state를 변경하려 할경우 warn을 생성
         if (self.status !== "mutation") {
           console.warn(`You should use a mutation to set ${key}`);
+          self.status = "resting";
         }
-
-        self.status = "resting";
 
         return true;
       },
@@ -70,6 +69,8 @@ export default class Store {
 
     //액션과 다르게 기존 state에 변화를 줌
     self.state = Object.assign(self.state, newState);
+
+    self.status = "resting";
 
     return true;
   }
