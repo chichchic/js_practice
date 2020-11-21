@@ -51,9 +51,9 @@ export default {
       if (state.dotDatas[key].primeLineZIndex < zIndex) {
         state.dotDatas[key].primeLineZIndex = zIndex;
         state.dotDatas[key].primeLineNumber = lineNumber;
-        state.xDataset.unshift(xDataset);
+        state.dotDatas[key].xDataset.unshift(xDataset);
       } else {
-        state.xDataset.push(xDataset);
+        state.dotDatas[key].xDataset.push(xDataset);
       }
     }
   },
