@@ -37,4 +37,24 @@ export default {
   SET_MAX_DATA(state, payload) {
     state.maxData = payload;
   },
+  ADD_DOT_POINTS_DATA(state, { x, y, title, lineNumber, zIndex, xDataset }) {
+    const key = x.toFixed(5) + y.toFixed(5);
+    if (!state.dotPoints.has(key)) {
+      state.dotPoints.add(key);
+      state.dotDatas[key] = {
+        title: title,
+        primeLineNumber: lineNumber,
+        primeLineZIndex: zIndex,
+        xDataset: [xDataset],
+      };
+    } else {
+      if (state.dotDatas[key].primeLineZIndex < zIndex) {
+        state.dotDatas[key].primeLineZIndex = zIndex;
+        state.dotDatas[key].primeLineNumber = lineNumber;
+        state.xDataset.unshift(xDataset);
+      } else {
+        state.xDataset.push(xDataset);
+      }
+    }
+  },
 };

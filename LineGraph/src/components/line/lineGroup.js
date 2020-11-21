@@ -1,22 +1,28 @@
 import store from "../../store/index.js";
-
+import { dotHover } from "../event.js";
 import Line from "./line.js";
 
 export default class LineGroup {
   constructor(section) {
     this.lines = [];
-    console.log(store.state.color);
     store.state.data.forEach((element, index) => {
       const colorIndex = index % store.state.datasetCount;
       this.lines.push(
         new Line(section, element, index, store.state.color[colorIndex])
       );
     });
+    dotHover.apply(this, [section, 10]);
   }
 
   render() {
     this.lines.forEach((element) => {
       element.render();
+    });
+  }
+
+  renderMouseOn(index) {
+    this.lines.forEach((element) => {
+      element.render(index);
     });
   }
 }

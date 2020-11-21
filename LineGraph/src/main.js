@@ -7,6 +7,7 @@ import Grid from "./components/line/grid.js";
 export default class Chart {
   constructor(section, { data, options }) {
     this.section = section;
+    this.section.style.position = "relative";
 
     //Retina Display
     store.commit("SET_PIXEL_RATIO", window.devicePixelRatio);
@@ -44,7 +45,7 @@ export default class Chart {
     //TODO: 점과 선에 올렸을 때 선을 강조시켜주는 작업하기 -> 점만 가능하게 만들어보고 선까지 할 수 있도록 만들기
     //TODO: 음수가 나올 경우 아래쪽으로 grid 만들어주기
     //TODO: 면적 채워넣을 수 있도록 만들기
-    //TODO: 유선형으로 보여줄 수 있도록 만들기
+    //TODO: 유선형으로 보여줄 수 있도록 만들기 => y축 label과 데이터 값의 수가 일치하지 않을 경우
     store.commit(
       "SET_X_LABELS",
       data.labels ||
@@ -61,6 +62,8 @@ export default class Chart {
 
     this.grid = new Grid(this.section);
     this.lineGroup = new LineGroup(this.section);
+    // section, x, y, xDataset, title
+    // xDataset: Array, {borderColor, innerColor, datasetName, value}
 
     this.render();
   }

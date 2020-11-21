@@ -1,6 +1,6 @@
 export default {
   padding: {
-    top: 10, //default
+    top: 30, //default
     right: 0, //default
     bottom: 80, //default
     left: 80, //default
@@ -20,4 +20,6 @@ export default {
   data: null,
   datasetCount: 1, // default
   maxData: null,
+  dotPoints: new Set(),
+  dotDatas: {},
 };

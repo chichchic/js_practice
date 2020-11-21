@@ -2,38 +2,61 @@ import store from "../../store/index.js";
 
 import { makeCanvas } from "../../utils/common.js";
 export default class Line {
-  constructor(section, dataSet, zIndex, color) {
+  constructor(section, dataSet, lineNumber, color) {
     this.color = color;
     this.points = [];
+    this.lineNumber = lineNumber;
 
     Object.assign(
       this,
       makeCanvas(
         store.state.canvasSize.width,
         store.state.canvasSize.height,
-        (zIndex + 1) * 2
+        (lineNumber + 1) * 2
       )
     );
     section.appendChild(this.canvas);
 
     dataSet.forEach((element, index) => {
-      this.points.push({
+      const dot = {
         x: index * store.state.gap.x + store.state.padding.left,
         y:
           store.state.canvasSize.height -
           store.state.padding.bottom -
           element * store.state.gap.y,
+      };
+      this.points.push(dot);
+      store.commit("ADD_DOT_POINTS_DATA", {
+        ...dot,
+        title: " ",
+        lineNumber: lineNumber,
+        zIndex: (lineNumber + 1) * 2,
+        xDataset: {
+          borderColor: color,
+          innerColor: color,
+          datasetName: "datasetName",
+          value: element,
+        },
       });
     });
   }
 
-  render() {
-    console.log(this.ctx);
+  render(index = null) {
+    this.ctx.clearRect(
+      0,
+      0,
+      store.state.canvasSize.width,
+      store.state.canvasSize.height
+    );
+    let opacity = 1;
+    if (!Object.is(index, null) && this.lineNumber !== index) {
+      opacity = 0.3;
+    }
+    this.ctx.strokeStyle = this.color;
+    this.ctx.globalAlpha = opacity;
     this.ctx.lineWidth = 4;
     this.ctx.beginPath();
-    this.ctx.strokeStyle = this.color;
     this.ctx.moveTo(this.points[0].x, this.points[0].y);
-    console.log(this.points[0].x, this.points[0].y);
     for (let i = 0; i < this.points.length; i++) {
       this.ctx.lineTo(this.points[i].x, this.points[i].y);
     }
@@ -44,6 +67,7 @@ export default class Line {
 
     this.points.forEach((element, index) => {
       this.ctx.fillStyle = this.color;
+      this.ctx.globalAlpha = opacity;
       this.ctx.beginPath();
       this.ctx.arc(
         this.points[index].x,
@@ -55,6 +79,7 @@ export default class Line {
       );
       this.ctx.fill();
       this.ctx.fillStyle = "#ffffff";
+      this.ctx.globalAlpha = opacity;
       this.ctx.beginPath();
       this.ctx.arc(
         this.points[index].x,
@@ -66,5 +91,6 @@ export default class Line {
       );
       this.ctx.fill();
     });
+    console.log(index, this.lineNumber);
   }
 }
