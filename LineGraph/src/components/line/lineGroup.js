@@ -14,9 +14,9 @@ export default class LineGroup {
     });
   }
 
-  render(ctx) {
+  render() {
     this.lines.forEach((element) => {
-      element.render(ctx);
+      element.render();
     });
   }
 }

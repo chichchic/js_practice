@@ -9,53 +9,62 @@ export default class Line {
     Object.assign(
       this,
       makeCanvas(
-        store.state.width,
-        store.state.height,
-        store.state.pixelRatio,
-        zIndex * 2
+        store.state.canvasSize.width,
+        store.state.canvasSize.height,
+        (zIndex + 1) * 2
       )
     );
     section.appendChild(this.canvas);
 
-    let maxData = 0;
-
     dataSet.forEach((element, index) => {
-      maxData = Math.max(element, maxData);
       this.points.push({
-        x: index * store.state.xGap + store.state.padding.left,
-        y: store.height + store.state.padding.top - element * store.state.yGap,
+        x: index * store.state.gap.x + store.state.padding.left,
+        y:
+          store.state.canvasSize.height -
+          store.state.padding.bottom -
+          element * store.state.gap.y,
       });
     });
-    if (!store.state.maxData || store.state.maxData < maxData) {
-      store.commit("SET_MAX_DATA", maxData);
-    }
   }
 
-  render(ctx) {
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-    ctx.strokeStyle = this.color;
-    ctx.moveTo(this.points[0].x, this.points[0].y);
+  render() {
+    console.log(this.ctx);
+    this.ctx.lineWidth = 4;
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = this.color;
+    this.ctx.moveTo(this.points[0].x, this.points[0].y);
+    console.log(this.points[0].x, this.points[0].y);
     for (let i = 0; i < this.points.length; i++) {
-      ctx.lineTo(this.points[i].x, this.points[i].y);
+      this.ctx.lineTo(this.points[i].x, this.points[i].y);
     }
-    ctx.stroke();
+    this.ctx.stroke();
+
+    //TODO: dot.js로 분리시킨 후 dot의 정보를 set 또는 object로 관리해 tooltip에서 사용할 수 있도록 만들 것
+    //TODO: zIndex를 기반으로 정보의 순서를 저장하기.
+
     this.points.forEach((element, index) => {
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.arc(this.points[index].x, this.points[index].y, 6, 6, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = "#ffffff";
-      ctx.beginPath();
-      ctx.arc(
-        this.points[index].x + 80,
+      this.ctx.fillStyle = this.color;
+      this.ctx.beginPath();
+      this.ctx.arc(
+        this.points[index].x,
+        this.points[index].y,
+        6,
+        6,
+        0,
+        Math.PI * 2
+      );
+      this.ctx.fill();
+      this.ctx.fillStyle = "#ffffff";
+      this.ctx.beginPath();
+      this.ctx.arc(
+        this.points[index].x,
         this.points[index].y,
         3,
         6,
         0,
         Math.PI * 2
       );
-      ctx.fill();
+      this.ctx.fill();
     });
   }
 }

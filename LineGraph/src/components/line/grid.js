@@ -5,12 +5,7 @@ export default class Grid {
   constructor(section) {
     Object.assign(
       this,
-      makeCanvas(
-        store.state.canvasSize.width,
-        store.state.canvasSize.height,
-        store.state.pixelRatio,
-        0
-      )
+      makeCanvas(store.state.canvasSize.width, store.state.canvasSize.height, 0)
     );
     section.appendChild(this.canvas);
   }
