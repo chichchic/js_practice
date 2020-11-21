@@ -31,13 +31,17 @@ export default class Chart {
     }
 
     let allOfData = [];
+    let maxDataCount = 0;
     if (store.state.datasetCount === 1) {
       allOfData = data.datasets;
+      maxDataCount = data.datasets.length;
     } else {
       data.datasets.forEach((element) => {
+        maxDataCount = Math.max(maxDataCount, element.length);
         allOfData.push(...element);
       });
     }
+    store.commit("SET_MAX_DATA_COUNT", maxDataCount);
     store.commit("SET_MAX_DATA", Math.max(...allOfData));
     //XXX: 값에 대한 초기화와 사용에 있어서 순서 보장에 관해 설정을 해야함. 역할을 분리시킬 방법을 고려해야 함
     //TODO: 초기 데이터 관리를 하는 class를 만들어 이후 데이터가 변경되었을 때도 알아서 바뀔 수 있도록 만들어야 해야 함
@@ -49,9 +53,13 @@ export default class Chart {
     store.commit(
       "SET_X_LABELS",
       data.labels ||
-        data.datasets.map((_, index) => {
-          return index + 1;
-        })
+        (function () {
+          const xLabel = [];
+          for (let i = 0; i < store.state.maxDataCount; i++) {
+            xLabel.push(i);
+          }
+          return xLabel;
+        })()
     );
     const yLabel = [];
     for (let i = 0; i <= store.state.maxData; i++) {

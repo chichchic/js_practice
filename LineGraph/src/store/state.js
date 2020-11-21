@@ -20,6 +20,7 @@ export default {
   data: null,
   datasetCount: 1, // default
   maxData: null,
+  maxDataCount: null,
   dotPoints: new Set(),
   dotDatas: {},
 };

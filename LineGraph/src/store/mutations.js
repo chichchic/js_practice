@@ -37,6 +37,9 @@ export default {
   SET_MAX_DATA(state, payload) {
     state.maxData = payload;
   },
+  SET_MAX_DATA_COUNT(state, payload) {
+    state.maxDataCount = payload;
+  },
   ADD_DOT_POINTS_DATA(state, { x, y, title, lineNumber, zIndex, xDataset }) {
     const key = x.toFixed(5) + y.toFixed(5);
     if (!state.dotPoints.has(key)) {
