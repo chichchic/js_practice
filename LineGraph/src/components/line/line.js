@@ -41,6 +41,9 @@ export default class Line {
     });
   }
 
+  //TODO: 면적 채워넣을 수 있도록 만들기
+  //TODO: 유선형으로 보여줄 수 있도록 만들기
+
   render(index = null) {
     this.ctx.clearRect(
       0,

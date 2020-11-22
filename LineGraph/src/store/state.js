@@ -1,26 +1,38 @@
 export default {
   padding: {
-    top: 30, //default
-    right: 0, //default
-    bottom: 80, //default
-    left: 80, //default
+    top: 0, //title + padding
+    right: 0, //padding
+    bottom: 0, //xAxes + padding
+    left: 0, //yAxes + padding
   },
-  gap: {
-    x: null,
-    y: null,
-  },
+  xGap: null,
   canvasSize: {
     width: null,
     height: null,
   },
   pixelRatio: null,
-  xLabels: null,
-  yLabels: null,
-  color: null,
-  data: null,
-  datasetCount: 1, // default
-  maxData: null,
-  maxDataCount: null,
+  labels: [],
+  datasets: [],
+  // xAxes: {
+  //   display: true,
+  //   scaleLabel: {
+  //     display: false,
+  //     labelString: "",
+  //   },
+  // },
+  // yAxes: {
+  //   display: true,
+  //   scaleLabel: {
+  //     display: false,
+  //     labelString: "",
+  //   },
+  // },
+  maxData: 0,
+  minData: 0,
+  unit: null,
+  unitCount: null,
+  hasNegative: null,
+  dataLength: null,
   dotPoints: new Set(),
   dotDatas: {},
 };

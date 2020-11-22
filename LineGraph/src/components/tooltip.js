@@ -1,3 +1,6 @@
+//TODO: tooltip의 변수들을 공용으로 사용하도록 수정
+//TODO: css를 통해 tooltip을 관리하도록 수정
+
 export default class ToolTip {
   constructor(section, top, left, title, xDataset) {
     // xDataset: Array, {borderColor, innerColor, datasetName, value}
