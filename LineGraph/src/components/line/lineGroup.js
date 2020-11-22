@@ -1,17 +1,18 @@
+/*
+역할: line rendering 관리 및 tooltip 생성
+*/
+
 import store from "../../store/index.js";
 import { dotHover } from "../event.js";
 import Line from "./line.js";
 
 export default class LineGroup {
-  constructor(section) {
+  constructor(section, { display = true }) {
     this.lines = [];
-    store.state.data.forEach((element, index) => {
-      const colorIndex = index % store.state.datasetCount;
-      this.lines.push(
-        new Line(section, element, index, store.state.color[colorIndex])
-      );
+    store.state.datasets.forEach((element, index) => {
+      this.lines.push(new Line(section, index, element));
     });
-    dotHover.apply(this, [section, 10]);
+    if (display) dotHover.apply(this, [section, 3]);
   }
 
   render() {
