@@ -21,7 +21,7 @@ try {
           label: "Second",
           backgroundColor: "rgba(54, 162, 235, 0.2)",
           borderColor: "rgba(54, 162, 235, 1)",
-          data: [-19, 2, -23, 7, 30, 6, -20],
+          data: [-19, 2, -23, 0, 0, 0, -20],
           fill: false,
         },
         {

@@ -23,7 +23,7 @@ function makeDefaultAxes({ xAxes, yAxes }) {
   };
   return {
     xAxes: Object.assign(defaultXAxes, xAxes),
-    yAxes: Object.assign(defaultXAxes, xAxes),
+    yAxes: Object.assign(defaultYAxes, yAxes),
   };
 }
 function init(section, data, options) {
@@ -94,6 +94,7 @@ export default class Chart {
     if (scales.yAxes.scaleLabel.display) {
       store.commit("ADD_PADDING", { left: 25 });
     }
+
     this.grid = new Grid(this.section, scales);
     this.lines = new LineGroup(this.section, options.tooltips);
 

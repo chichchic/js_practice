@@ -9,7 +9,7 @@ export default class Line {
     lineNumber,
     { label, backgroundColor, borderColor, data, fill }
   ) {
-    this.lineNumber;
+    this.lineNumber = lineNumber;
     this.backgroundColor = backgroundColor;
     this.borderColor = borderColor;
     this.fill = fill;

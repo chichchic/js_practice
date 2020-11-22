@@ -12,7 +12,7 @@ function drawXAxesLabel(ctx, xAxes, canvasWidth, canvasHeight) {
     ctx.fillText(
       xAxes.scaleLabel.labelString,
       canvasWidth / 2,
-      canvasHeight - bottom - 20
+      canvasHeight - 20
     );
   }
 }
@@ -42,6 +42,7 @@ function drawXAxes(ctx, canvasWidth, canvasHeight) {
     ? (canvasHeight - bottom - top) / store.state.unitCount / 2
     : (canvasHeight - bottom - top) / store.state.unitCount;
   ctx.font = "15px Arial";
+  ctx.textAlign = "right";
   ctx.textBaseline = "middle";
   for (let i = 0; i <= store.state.unitCount; i++) {
     const color = i === 0 ? "#333333" : "#a0a0a0";
@@ -89,6 +90,7 @@ function drawYAxes(ctx, canvasWidth, canvasHeight) {
     );
     ctx.font = "15px Arial";
     ctx.textBaseline = "top";
+    ctx.textAlign = "center";
     ctx.fillText(
       store.state.labels[i],
       left + store.state.xGap * i,
@@ -109,15 +111,13 @@ export default class Grid {
   }
   render() {
     const { width: canvasWidth, height: canvasHeight } = store.state.canvasSize;
+
     if (this.xAxes.scaleLabel.display) {
       drawXAxesLabel(this.ctx, this.xAxes, canvasWidth, canvasHeight);
     }
     if (this.yAxes.scaleLabel.display) {
       drawYAxesLabel(this.ctx, this.yAxes, canvasWidth, canvasHeight);
     }
-
-    //XXX: 변경된 padding값에 맞춰 draw되도록 하기 위해 반복된 if를 사용
-    //FIXME: 그리드가 아닌 다른 곳에서 미리 padding값들에 대한 계산을 해야 함
 
     if (this.xAxes.display) {
       drawXAxes(this.ctx, canvasWidth, canvasHeight);

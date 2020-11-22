@@ -12,7 +12,7 @@ export default class LineGroup {
     store.state.datasets.forEach((element, index) => {
       this.lines.push(new Line(section, index, element));
     });
-    // dotHover.apply(this, [section, 10]);
+    if (display) dotHover.apply(this, [section, 3]);
   }
 
   render() {
