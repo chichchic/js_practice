@@ -1,11 +1,19 @@
 import store from "../../store/index.js";
 
 import { makeCanvas } from "../../utils/common.js";
+
+//명시되지 않은 값은 mutation에서 기본 값으로 처리, data에 대한 예외처리도 되어있음
 export default class Line {
-  constructor(section, dataSet, lineNumber, color) {
-    this.color = color;
+  constructor(
+    section,
+    lineNumber,
+    { label, backgroundColor, borderColor, data, fill }
+  ) {
+    this.lineNumber;
+    this.backgroundColor = backgroundColor;
+    this.borderColor = borderColor;
+    this.fill = fill;
     this.points = [];
-    this.lineNumber = lineNumber;
 
     Object.assign(
       this,
@@ -17,30 +25,35 @@ export default class Line {
     );
     section.appendChild(this.canvas);
 
-    dataSet.forEach((element, index) => {
+    const { top, right, bottom, left } = store.state.padding;
+    const { width: canvasWidth, height: canvasHeight } = store.state.canvasSize;
+
+    const xBaseLine = store.state.hasNegative
+      ? (canvasHeight - bottom + top) / 2
+      : canvasHeight - bottom;
+    const gap = store.state.hasNegative
+      ? (canvasHeight - bottom - top) / store.state.unitCount / 2
+      : (canvasHeight - bottom - top) / store.state.unitCount;
+    data.forEach((value, index) => {
       const dot = {
-        x: index * store.state.gap.x + store.state.padding.left,
-        y:
-          store.state.canvasSize.height -
-          store.state.padding.bottom -
-          element * store.state.gap.y,
+        x: index * store.state.xGap + left,
+        y: xBaseLine - (value / store.state.unit) * gap,
       };
       this.points.push(dot);
       store.commit("ADD_DOT_POINTS_DATA", {
         ...dot,
-        title: " ",
+        title: store.state.labels[index],
         lineNumber: lineNumber,
         zIndex: (lineNumber + 1) * 2,
         xDataset: {
-          borderColor: color,
-          innerColor: color,
-          datasetName: "datasetName",
-          value: element,
+          borderColor,
+          backgroundColor,
+          label,
+          value,
         },
       });
     });
   }
-
   //TODO: 면적 채워넣을 수 있도록 만들기
   //TODO: 유선형으로 보여줄 수 있도록 만들기
 
@@ -55,7 +68,7 @@ export default class Line {
     if (!Object.is(index, null) && this.lineNumber !== index) {
       opacity = 0.3;
     }
-    this.ctx.strokeStyle = this.color;
+    this.ctx.strokeStyle = this.borderColor;
     this.ctx.globalAlpha = opacity;
     this.ctx.lineWidth = 4;
     this.ctx.beginPath();
@@ -65,11 +78,8 @@ export default class Line {
     }
     this.ctx.stroke();
 
-    //TODO: dot.js로 분리시킨 후 dot의 정보를 set 또는 object로 관리해 tooltip에서 사용할 수 있도록 만들 것
-    //TODO: zIndex를 기반으로 정보의 순서를 저장하기.
-
     this.points.forEach((element, index) => {
-      this.ctx.fillStyle = this.color;
+      this.ctx.fillStyle = this.borderColor;
       this.ctx.globalAlpha = opacity;
       this.ctx.beginPath();
       this.ctx.arc(
@@ -94,6 +104,5 @@ export default class Line {
       );
       this.ctx.fill();
     });
-    console.log(index, this.lineNumber);
   }
 }

@@ -73,7 +73,8 @@ export default {
     state.unitCount =
       maxAbsData % unit === 0
         ? maxAbsData / unit
-        : unit * (Math.floor(maxAbsData / unit) + 1);
+        : Math.floor(maxAbsData / unit) + 1;
+    console.log(state.unit, state.unitCount);
   },
   ADD_DOT_POINTS_DATA(state, { x, y, title, lineNumber, zIndex, xDataset }) {
     const key = x.toFixed(5) + y.toFixed(5);

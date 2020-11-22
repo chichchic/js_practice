@@ -2,18 +2,6 @@ import store from "../../store/index.js";
 import { drawStraight } from "../../utils/draw.js";
 import { makeCanvas } from "../../utils/common.js";
 
-function makeDefaultAxes(axes) {
-  let defaultAxes = {
-    display: true,
-    scaleLabel: {
-      display: false,
-      labelString: "",
-    },
-  };
-  if (!axes) return defaultAxes;
-  return Object.assign(defaultAxes, axes);
-}
-
 function drawXAxesLabel(ctx, xAxes, canvasWidth, canvasHeight) {
   const { top, right, bottom, left } = store.state.padding;
   if (xAxes.scaleLabel.display) {
@@ -26,7 +14,6 @@ function drawXAxesLabel(ctx, xAxes, canvasWidth, canvasHeight) {
       canvasWidth / 2,
       canvasHeight - bottom - 20
     );
-    store.commit("ADD_PADDING", { bottom: 25 });
   }
 }
 
@@ -42,16 +29,15 @@ function drawYAxesLabel(ctx, yAxes, canvasWidth, canvasHeight) {
     ctx.rotate(-Math.PI / 2);
     ctx.fillText(yAxes.scaleLabel.labelString, 0, 0);
     ctx.restore();
-    store.commit("ADD_PADDING", { left: 25 });
   }
 }
 // 조금 튀어 나온 부분 변수로 관리하기
 function drawXAxes(ctx, canvasWidth, canvasHeight) {
   const { top, right, bottom, left } = store.state.padding;
-  console.log(store.state.hasNegative);
   const xBaseLine = store.state.hasNegative
     ? (canvasHeight - bottom + top) / 2
     : canvasHeight - bottom;
+
   const gap = store.state.hasNegative
     ? (canvasHeight - bottom - top) / store.state.unitCount / 2
     : (canvasHeight - bottom - top) / store.state.unitCount;
@@ -113,9 +99,8 @@ function drawYAxes(ctx, canvasWidth, canvasHeight) {
 
 export default class Grid {
   constructor(section, scales = { xAxes, yAxes }) {
-    this.xAxes = makeDefaultAxes(scales.xAxes);
-    this.yAxes = makeDefaultAxes(scales.yAxes);
-
+    this.xAxes = scales.xAxes;
+    this.yAxes = scales.yAxes;
     Object.assign(
       this,
       makeCanvas(store.state.canvasSize.width, store.state.canvasSize.height, 0)
@@ -133,12 +118,7 @@ export default class Grid {
 
     //XXX: 변경된 padding값에 맞춰 draw되도록 하기 위해 반복된 if를 사용
     //FIXME: 그리드가 아닌 다른 곳에서 미리 padding값들에 대한 계산을 해야 함
-    if (this.xAxes.display) {
-      store.commit("ADD_PADDING", { bottom: 50 });
-    }
-    if (this.yAxes.display) {
-      store.commit("ADD_PADDING", { left: 50 });
-    }
+
     if (this.xAxes.display) {
       drawXAxes(this.ctx, canvasWidth, canvasHeight);
     }
