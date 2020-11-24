@@ -19,6 +19,7 @@
   border: none;
   color: white;
   background-color: #333333;
+  padding: 0 2rem;
 }
 
 .init--content__search-bar--input {
