@@ -24,9 +24,11 @@ async function setLanguageOptions() {
 }
 
 async function getMatchList() {
-  const result = await fetch("http://localhost:3000");
-  const data = await result.json();
-  console.log(data.accountId);
+  const resultJson = await fetch(
+    `http://localhost:3000/getMatchList?name=${searchBarInput.value}&start=0&gameCount=5`
+  );
+  const result = await resultJson.json();
+  console.log(result);
 }
 
 setLanguageOptions();
