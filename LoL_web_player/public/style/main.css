@@ -1,20 +1,22 @@
-.init {
+@import url("commons.css");
+
+.main {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.init--content {
+.main--content {
   display: inline-block;
 }
-.init--content__search-bar {
+.main--content__search-bar {
   margin-top: 5rem;
   display: flex;
   border: 1px solid #333333;
   height: 4rem;
 }
-.init--content__search-bar--select {
+.main--content__search-bar--select {
   width: 8rem;
   border: none;
   color: white;
@@ -22,14 +24,14 @@
   padding: 0 2rem;
 }
 
-.init--content__search-bar--input {
+.main--content__search-bar--input {
   flex-grow: 1;
   border: none;
   text-align: right;
   padding: 0 2rem;
 }
 
-.init--content__search-bar--btn {
+.main--content__search-bar--btn {
   border: none;
   color: white;
   background-color: #333333;

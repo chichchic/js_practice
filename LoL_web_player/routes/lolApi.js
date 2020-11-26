@@ -1,34 +1,24 @@
-const http = require("http");
+var express = require("express");
 const request = require("request");
-const path = require("path");
-const dotenv = require("dotenv");
 const url = require("url");
+const path = require("path");
 
-const { resolve } = require("path");
-dotenv.config({ path: path.join(__dirname, "/.env.local") });
+var router = express.Router();
+
+require("dotenv").config({ path: path.join(__dirname, "../.env.local") });
 const LOL_API = process.env.LOL_API;
 
-const server = http.createServer();
-
-server.on("request", async function (req, res) {
-  res.writeHead(200, {
-    "Content-Type": "text/html",
-    "Access-Control-Allow-Origin": "*",
-  });
+/* GET home page. */
+router.get("/summonor", async function (req, res, next) {
   const urlParse = url.parse(req.url, true);
   const pathName = urlParse.pathname;
-  const query = urlParse.query;
-  if (req.method === "GET") {
-    if (pathName === "/getMatchList") {
-      const { name, start, gameCount } = query;
-      const accountId = await getAccountId(name);
-      const matchList = await getMatchList(accountId, start, gameCount);
-      const matchInfo = await getMatchesInfo(matchList);
-      res.end(JSON.stringify(matchInfo));
-    }
-  }
+  const { name, start, gameCount } = urlParse.query;
+
+  const accountId = await getAccountId(name);
+  const matchList = await getMatchList(accountId, start, gameCount);
+  const matchInfo = await getMatchesInfo(matchList);
+  res.end(JSON.stringify(matchInfo));
 });
-server.listen(3000);
 
 function makePromiseRequest(uri) {
   return new Promise((resolve, reject) => {
@@ -80,3 +70,5 @@ async function getMatchesInfo(matchList) {
     return JSON.parse(val);
   });
 }
+
+module.exports = router;

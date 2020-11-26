@@ -1,4 +1,4 @@
-@import url("./src/assets/font/font.css");
+@import url("./font/font.css");
 
 * {
   user-select: none;
@@ -44,7 +44,7 @@ input:focus {
   outline: none;
 }
 
-textarea {
+input textarea {
   outline: 0px none transparent;
   border: #333333 1px solid;
   resize: none;
