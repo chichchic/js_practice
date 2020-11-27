@@ -6,4 +6,8 @@ router.get("/", function (req, res, next) {
   res.render("main");
 });
 
+router.get("/matchList", function (req, res, next) {
+  res.render("matchList");
+});
+
 module.exports = router;

@@ -1,0 +1,66 @@
+@import url("commons.css");
+
+.matchlist-page--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5rem;
+  height: 4rem;
+}
+
+.matchlist-page--header__search-bar {
+  display: flex;
+  border: 1px solid #333333;
+}
+
+.matchlist-page--header__search-bar--select {
+  width: 8rem;
+  border: none;
+  color: white;
+  background-color: #333333;
+  padding: 0 2rem;
+  cursor: pointer;
+}
+
+.matchlist-page--header__search-bar--input {
+  flex-grow: 1;
+  border: none;
+  text-align: right;
+  padding: 0 2rem;
+}
+
+.matchlist-page--header__search-bar--btn {
+  border: none;
+  color: white;
+  background-color: #333333;
+  padding: 0 2rem;
+  cursor: pointer;
+}
+
+.matchlist-page--content {
+  display: flex;
+}
+
+.matchlist-page--basic-info {
+  display: flex;
+}
+
+.matchlist-page--basic-info > img {
+  width: 5rem;
+  height: 5rem;
+}
+
+.matchlist-page--rank-info--card {
+  display: flex;
+}
+
+.matchlist-page--rank-info--card .title {
+}
+.matchlist-page--rank-info--card .rank {
+}
+
+.matchlist-page--rank-info--card .static {
+}
+
+.matchlist-page--rank-info--card .ratio {
+}

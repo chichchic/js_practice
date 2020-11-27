@@ -22,18 +22,22 @@ async function setLanguageOptions() {
   });
 }
 
-async function getMatchList() {
-  const resultJson = await fetch(
-    `http://localhost:3000/lol/summonor?name=${searchBarInput.value}&start=0&gameCount=5`
-  );
-  const result = await resultJson.json();
-  console.log(result);
+function addButtonEvent() {
+  searchBarBtn.addEventListener("click", openMatchList);
+  window.addEventListener("keydown", async (e) => {
+    if (searchBarInput === document.activeElement && e.key === "Enter") {
+      openMatchList();
+    }
+  });
 }
 
-setLanguageOptions();
-searchBarBtn.addEventListener("click", getMatchList);
-window.addEventListener("keydown", async (e) => {
-  if (searchBarInput === document.activeElement && e.key === "Enter") {
-    await getMatchList();
-  }
-});
+function openMatchList() {
+  window.open(`/matchList?name=${searchBarInput.value}`, "self");
+}
+
+function init() {
+  setLanguageOptions();
+  addButtonEvent();
+}
+
+init();
