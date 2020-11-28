@@ -92,9 +92,9 @@ async function getRankInfo() {
     card.querySelector(
       ".static"
     ).innerText = `${data.leaguePoints} Lp / ${data.wins} W / ${data.losses} L`;
-    card.querySelector(".ratio").innerText = `Win Ratio ${Math.floor(
-      (data.wins / (data.losses + data.wins)) * 100
-    )}%`;
+    card.querySelector(".ratio").innerText = `Win Ratio ${
+      Math.floor((data.wins / (data.losses + data.wins)) * 100 * 100) / 100
+    }%`;
   });
 }
 
