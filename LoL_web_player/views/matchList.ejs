@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include ('./common/header.ejs') %>
+    <link rel="stylesheet" type="text/css" href="style/matchList.css" />
+  </head>
+  <body>
+    <section class="matchlist-page">
+      <article class="matchlist-page--header">
+        <h2 class="matchlist-page--header__title">
+          Leage of Legend Web Player
+        </h2>
+        <div class="matchlist-page--header__search-bar">
+          <select class="matchlist-page--header__search-bar--select"></select>
+          <input
+            type="text"
+            class="matchlist-page--header__search-bar--input"
+          />
+          <button class="matchlist-page--header__search-bar--btn">
+            search
+          </button>
+        </div>
+      </article>
+      <div class="matchlist-page--content">
+        <section class="matchlist-page--summoner-info">
+          <article class="matchlist-page--basic-info">
+            <img
+              src="/images/profileicon/0.png"
+              alt="profileIcon"
+              class="matchlist-page--basic-info__img"
+            />
+            <div>
+              <div class="matchlist-page--basic-info__name"></div>
+              <div class="matchlist-page--basic-info__level"></div>
+            </div>
+          </article>
+          <article class="matchlist-page--rank-info">
+            <article class="matchlist-page--rank-info--card solo-rank">
+              <img
+                src="/images/ranked-emblems/Emblem_Unrank.png"
+                alt="profileIcon"
+                class="img"
+              />
+              <div>
+                <div class="title">Ranked Solo</div>
+                <div class="rank">Unranked</div>
+                <div class="static">0 Lp / 0 W 0 L</div>
+                <div class="ratio">Win Ratio -%</div>
+              </div>
+            </article>
+            <article class="matchlist-page--rank-info--card flex-rank">
+              <img
+                src="/images/ranked-emblems/Emblem_Unrank.png"
+                alt="profileIcon"
+                class="img"
+              />
+              <div>
+                <div class="title">Flex 5:5 Rank</div>
+                <div class="rank">Unranked</div>
+                <div class="static">0 Lp / 0 W 0 L</div>
+                <div class="ratio">Win Ratio -%</div>
+              </div>
+            </article>
+          </article>
+        </section>
+        <section>
+          <article class="matchlist-page--matchlist"></article>
+          <button class="matchlist-page--show-more-btn">show more</button>
+        </section>
+      </div>
+    </section>
+    <script type="module" src="javascripts/matchList.js"></script>
+  </body>
+</html>

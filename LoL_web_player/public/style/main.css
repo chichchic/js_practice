@@ -1,0 +1,43 @@
+@import url("commons.css");
+
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.main--content {
+  display: inline-block;
+}
+.main--content__search-bar {
+  margin-top: 5rem;
+  display: flex;
+  border: 1px solid #333333;
+  height: 4rem;
+}
+.main--content__search-bar--select {
+  width: 8rem;
+  border: none;
+  color: white;
+  background-color: #333333;
+  padding: 0 2rem;
+  cursor: pointer;
+}
+
+.main--content__search-bar--input {
+  flex-grow: 1;
+  border: none;
+  text-align: right;
+  padding: 0 2rem;
+}
+
+.main--content__search-bar--btn {
+  border: none;
+  color: white;
+  background-color: #333333;
+  padding: 0 2rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
