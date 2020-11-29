@@ -7,13 +7,16 @@ const searchBarInput = document.querySelector(
 const searchBarBtn = document.querySelector(
   ".matchlist-page--header__search-bar--btn"
 );
-
+const showMoreBtn = document.querySelector(".matchlist-page--show-more-btn");
 const matchLists = document.querySelector(".matchlist-page--matchlist");
 
 const apiUrl = "http://localhost:3000/lol";
-
+let championNumtoName;
+let spellName;
+let runePath;
 // accountId, id, profileIconId, summonerLevel, revisionDate
 let summonorInfo = null;
+let matchStartIndex = null;
 
 async function setLanguageOptions() {
   const req = await fetch(
@@ -35,6 +38,23 @@ function searchNewName() {
   window.open(`/matchList?name=${searchBarInput.value}`, "self");
 }
 
+async function getMoreMatchList() {
+  const matchListInfos = await getMatchList(
+    summonorInfo.accountId,
+    matchStartIndex
+  );
+  for (const { gameId } of matchListInfos) {
+    const matchInfo = await getMatchInfo(gameId);
+    const match = createMatchCard(
+      championNumtoName,
+      spellName,
+      runePath,
+      matchInfo
+    );
+    matchLists.appendChild(match);
+  }
+}
+
 function addButtonEvent() {
   searchBarBtn.addEventListener("click", searchNewName);
   window.addEventListener("keydown", async (e) => {
@@ -42,9 +62,13 @@ function addButtonEvent() {
       searchNewName();
     }
   });
+
+  showMoreBtn.addEventListener("click", getMoreMatchList);
 }
 
 async function getMatchList(accountId, start = 0, gameCount = 5) {
+  console.log(start, gameCount);
+  matchStartIndex = start + gameCount;
   const resultJson = await fetch(
     apiUrl +
       `/matchList?accountId=${accountId}&start=${start}&gameCout=${gameCount}`
@@ -82,6 +106,26 @@ async function getSpellJson() {
   return spellName;
 }
 
+async function getRuneJson() {
+  const req = await fetch(
+    "http://ddragon.leagueoflegends.com/cdn/10.24.1/data/en_US/runesReforged.json"
+  );
+  const data = await req.json();
+  const runePath = new Object();
+  function extractImgPath(str) {
+    return str.substr(18);
+  }
+  data.forEach((element) => {
+    runePath[element.id] = extractImgPath(element.icon);
+    element.slots.forEach(({ runes }) => {
+      runes.forEach((element) => {
+        runePath[element.id] = extractImgPath(element.icon);
+      });
+    });
+  });
+  return runePath;
+}
+
 async function getMatchInfo(matchId) {
   const resultJson = await fetch(apiUrl + `/matchInfo?matchId=${matchId}`);
   return await resultJson.json();
@@ -89,7 +133,7 @@ async function getMatchInfo(matchId) {
 
 async function getSommonorInfo() {
   const resultJson = await fetch(
-    apiUrl + `/summonor?name=${searchBarInput.value}`
+    apiUrl + `/summonor?name=${encodeURI(searchBarInput.value)}`
   );
   summonorInfo = await resultJson.json();
   document.querySelector(
@@ -105,6 +149,7 @@ async function getSommonorInfo() {
 function createMatchCard(
   championNumtoName,
   spellName,
+  runePath,
   { gameId, gameDuration, teams, participants, mapId, participantIdentities }
 ) {
   const {
@@ -155,6 +200,8 @@ function createMatchCard(
         kills,
         deaths,
         assists,
+        perk0,
+        perkSubStyle,
       } = stats;
       if (summonerName === summonorInfo.name) {
         summonorWin = teamId === 100 ? isBlueWin : !isBlueWin;
@@ -162,11 +209,13 @@ function createMatchCard(
 
         spellFirst.src = `/images/spell/${spellName[spell1Id]}.png`;
         spellSecond.src = `/images/spell/${spellName[spell2Id]}.png`;
+        runeFirst.src = `/images/runes/${runePath[perk0]}`;
+        runeSecond.src = `/images/runes/${runePath[perkSubStyle]}`;
         const totalCS = totalMinionsKilled + neutralMinionsKilled;
-        championInfoCS.innerText = `${totalCS} (${
+        championInfoCS.innerText = `CS: ${totalCS} (${
           Math.floor((totalCS / gameDurationMinute) * 100) / 100
         })`;
-        championInfoLv.innerText = `LV: ${champLevel}`;
+        championInfoLv.innerText = `Level: ${champLevel}`;
         championInfoKDA.innerText = `${kills}/${deaths}/${assists}`;
         summonorKA = kills + assists;
         for (let i = 0; i < 6; i++) {
@@ -190,23 +239,23 @@ function createMatchCard(
       )[0].innerText = summonerName;
     }
   );
-  championInfoCK.innerText = `${Math.floor(
+  championInfoCK.innerText = `P / Kill ${Math.floor(
     (summonorKA / (summonorWin === isBlueWin ? blueTotalKill : redTotalKill)) *
       100
   )}%`;
   if (isRegame) {
-    card.backgroundColor = "gray";
+    card.style.backgroundColor = "#DDDDDD";
   } else if (summonorWin) {
-    card.backgroundColor = "blue";
+    card.style.backgroundColor = "#3388ff";
   } else {
-    card.backgroundColor = "red";
+    card.style.backgroundColor = "#ff88aa";
   }
   return card;
-  //분당 cs계산 공식
 }
 
 function createMatchCardLayout() {
   const card = document.createElement("article");
+  card.className = "matchCard";
 
   const spell = document.createElement("div");
   spell.className = "spell";
@@ -239,12 +288,15 @@ function createMatchCardLayout() {
   champion.appendChild(championInfo);
 
   const items = document.createElement("div");
+  items.className = "items";
   const itemBox = document.createElement("div");
+  itemBox.className = "itemBox";
   for (let i = 0; i < 6; i++) {
     const item = document.createElement("img");
     itemBox.appendChild(item);
   }
   const ward = document.createElement("img");
+  ward.className = "ward";
   items.appendChild(itemBox);
   items.appendChild(ward);
 
@@ -265,6 +317,7 @@ function createMatchCardLayout() {
   redTeam.className = "redTeam";
   for (let i = 0; i < 5; i++) {
     const participantInfo = document.createElement("div");
+    participantInfo.className = "participantInfo";
     const participantImg = document.createElement("img");
     const participantName = document.createElement("span");
     participantInfo.appendChild(participantImg);
@@ -326,16 +379,22 @@ async function init() {
   setLanguageOptions();
   addButtonEvent();
   const parsedUrl = new URL(window.location.href);
-  const inputName = parsedUrl.searchParams.get("name");
+  const inputName = decodeURI(parsedUrl.searchParams.get("name"));
   searchBarInput.value = inputName;
   await getSommonorInfo();
   getRankInfo();
   const matchListInfos = await getMatchList(summonorInfo.accountId);
-  const championNumtoName = await getChampionJson();
-  const spellName = await getSpellJson();
+  championNumtoName = await getChampionJson();
+  spellName = await getSpellJson();
+  runePath = await getRuneJson();
   for (const { gameId } of matchListInfos) {
     const matchInfo = await getMatchInfo(gameId);
-    const match = createMatchCard(championNumtoName, spellName, matchInfo);
+    const match = createMatchCard(
+      championNumtoName,
+      spellName,
+      runePath,
+      matchInfo
+    );
     matchLists.appendChild(match);
   }
 }

@@ -32,7 +32,7 @@ function addButtonEvent() {
 }
 
 function openMatchList() {
-  window.open(`/matchList?name=${searchBarInput.value}`, "self");
+  window.open(`/matchList?name=${encodeURI(searchBarInput.value)}`, "self");
 }
 
 function init() {

@@ -12,7 +12,6 @@ const { getLeagueEntryById } = require("./outerApi/league");
 router.get("/summonor", async function (req, res, next) {
   const urlParse = url.parse(req.url, true);
   const { name } = urlParse.query;
-
   const summonerInfo = await getSummonorInfoByName(name);
   res.json(summonerInfo);
   res.end();

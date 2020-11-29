@@ -10,7 +10,7 @@ exports.getMatchList = async function (
   const promise = makePromiseRequest(
     link +
       `/matchlists/by-account/${accountId}?endIndex=${
-        startGame + gameCount
+        Number(startGame) + Number(gameCount)
       }&beginIndex=${startGame}`
   );
   const matchList = await promise;
